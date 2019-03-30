@@ -1,5 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 import time
 
 import numpy as np
@@ -21,10 +22,10 @@ class Factor(FactorBase):
         :return:
         """
         s = time.time()
-        length=5;
+        length = 5
         needData = self.needData# 计算所需数据
 
-        factor=needData[t.NETPCMTTM]/needData[t.OPERREVTTM]
+        factor = needData[t.NETPCMTTM]/needData[t.OPERREVTTM]
 
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
         return factor
