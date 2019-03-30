@@ -1,5 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: xxx
 import time
 
 import numpy as np
@@ -22,8 +23,8 @@ class Factor(FactorBase):
         """
         s = time.time()
         needData = self.needData# 计算所需数据
-        operevttm=needData[t.OPERREVTTM]
-        mktcap=needData[t.MKTCAP]
+        operevttm = needData[t.OPERREVTTM]
+        mktcap = needData[t.MKTCAP]
         factor = operevttm/mktcap
 
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
