@@ -1,5 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 import time
 
 import numpy as np
@@ -23,15 +24,15 @@ class Factor(FactorBase):
         s = time.time()
         length=5;
         needData = self.needData# 计算所需数据
-        close=needData[t.CLOSE]
-        vol=needData[t.VOLUME]
-        closelist=[close];vollist=[vol]
+        close = needData[t.CLOSE]
+        vol = needData[t.VOLUME]
+        closelist = [close];vollist=[vol]
         for i in range(length-1):
             closelist.append(self.calculator.Delay(close,i+1))
             vollist.append(self.calculator.Delay(vol,i + 1))
         s=0
         for i in range(length):
-            s+=closelist[i]*vollist[i]
+            s += closelist[i]*vollist[i]
         factor=sum(closelist)/s
 
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
