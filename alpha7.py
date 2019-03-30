@@ -1,5 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 import time
 
 import numpy as np
@@ -26,12 +27,12 @@ class Factor(FactorBase):
         length = 5
         needData = self.needData  # 计算所需数据
         close = needData[t.CLOSE]
-        vol=needData[t.VOLUME]
-        adv20=self.calculator.Mean(vol,20)
-        declose=self.calculator.Diff(close,7).applymap(lambda x:abs(x))
-        siclose=self.calculator.Diff(close,7).applymap(lambda x:np.sign(x))
-        r1=-1*self.calculator.Rank(declose,60)
-        factor =(adv20<vol)*(r1*siclose)+(adv20>=vol)*close.applymap(lambda x:1)
+        vol = needData[t.VOLUME]
+        adv20 = self.calculator.Mean(vol,20)
+        declose = self.calculator.Diff(close,7).applymap(lambda x:abs(x))
+        siclose = self.calculator.Diff(close,7).applymap(lambda x:np.sign(x))
+        r1 = -1*self.calculator.Rank(declose,60)
+        factor = (adv20<vol)*(r1*siclose)+(adv20>=vol)*close.applymap(lambda x:1)
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
         return factor
 
