@@ -1,5 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 
 import time
 
@@ -23,7 +24,7 @@ class Factor(FactorBase):
         """
         s = time.time()
         needData = self.needData                                # 计算所需数据
-        turn=needData[t.TURN]
+        turn = needData[t.TURN]
         factor = turn
 
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
