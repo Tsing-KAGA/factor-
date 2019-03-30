@@ -1,6 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
-import time
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 
 import numpy as np
 import pandas as pd
@@ -22,8 +22,8 @@ class Factor(FactorBase):
         """
         s = time.time()
         needData = self.needData# 计算所需数据
-        netasset=needData[t.NETASSET]
-        mktcap=needData[t.MKTCAP]
+        netasset = needData[t.NETASSET]
+        mktcap = needData[t.MKTCAP]
         factor = netasset/mktcap
 
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
