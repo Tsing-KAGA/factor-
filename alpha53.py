@@ -1,5 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 import time
 
 import numpy as np
@@ -21,11 +22,11 @@ class Factor(FactorBase):
         :return:
         """
         s = time.time()
-        length=5;
+        length = 5;
         needData = self.needData# 计算所需数据
-        high=needData[t.HIGH];close=needData[t.CLOSE];low=needData[t.LOW]
-        r1=(2*close-high-low)/(high-low);r2=self.calculator.Delay(r1,9)
-        factor=r2-r1
+        high = needData[t.HIGH];close=needData[t.CLOSE];low=needData[t.LOW]
+        r1 = (2*close-high-low)/(high-low);r2=self.calculator.Delay(r1,9)
+        factor = r2-r1
 
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
         return factor
