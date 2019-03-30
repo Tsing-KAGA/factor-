@@ -1,6 +1,6 @@
-# coding=utf8
-#该因子通过检验
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 import time
 
 import numpy as np
@@ -25,14 +25,13 @@ class Factor(FactorBase):
         """
         s = time.time()
         needData = self.needData  # 计算所需数据
-        high=needData[t.HIGH]
-        low=needData[t.LOW]
-        weightnow=self.calculator.RegBeta(high,low,10)
-        weightlist=self.calculator.RegBeta(high,low,18)
-        weightmean=self.calculator.Mean(weightlist,600)
-        weightstd=self.calculator.Std(weightlist,600)
-        zscore=(weightnow-weightmean)/weightstd
-
+        high = needData[t.HIGH]
+        low = needData[t.LOW]
+        weightnow = self.calculator.RegBeta(high,low,10)
+        weightlist = self.calculator.RegBeta(high,low,18)
+        weightmean = self.calculator.Mean(weightlist,600)
+        weightstd = self.calculator.Std(weightlist,600)
+        zscore = (weightnow-weightmean)/weightstd
         factor = zscore
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
         return factor
