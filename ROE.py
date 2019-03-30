@@ -1,5 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 
 import time
 
@@ -23,9 +24,9 @@ class Factor(FactorBase):
         """
         s = time.time()
         needData = self.needData# 计算所需数据
-        netasset=needData[t.NETASSET]
-        netpcmttm=needData[t.NETPCMTTM]
-        factor=netpcmttm/netasset
+        netasset = needData[t.NETASSET]
+        netpcmttm = needData[t.NETPCMTTM]
+        factor = netpcmttm/netasset
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
         return factor
 
