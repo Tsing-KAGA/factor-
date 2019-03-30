@@ -1,5 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 import time
 
 import numpy as np
@@ -28,10 +29,10 @@ class Factor(FactorBase):
         close = needData[t.CLOSE]
         open = needData[t.OPEN]
         vol = needData[t.VOLUME]
-        high=needData[t.HIGH]
-        high20=self.calculator.Mean(high,20)
+        high = needData[t.HIGH]
+        high20 = self.calculator.Mean(high,20)
         adv20 = self.calculator.Mean(vol, 20)
-        factor=(high20<high)*(-1*self.calculator.Diff(high,2))+(high20>=high)*(self.calculator.Diff(high,20))
+        factor = (high20<high)*(-1*self.calculator.Diff(high,2))+(high20>=high)*(self.calculator.Diff(high,20))
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
         return factor
 
