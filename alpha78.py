@@ -1,5 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 import time
 
 import numpy as np
@@ -21,20 +22,20 @@ class Factor(FactorBase):
         :return:
         """
         s = time.time()
-        length=5
+        length = 5
         needData = self.needData# 计算所需数据
-        high=needData[t.HIGH];low=needData[t.LOW]
-        [m,n]=high.shape;factor=pd.DataFrame(index=high.index,columns=high.columns)
+        high = needData[t.HIGH];low=needData[t.LOW]
+        [m,n] = high.shape;factor=pd.DataFrame(index=high.index,columns=high.columns)
         for i in range(m):
             for j in range(n):
-                sta=max(0,i-length);fin=max(0,i-1)+1
-                temp1=high.iloc[sta:fin,j].sort_values(ascending=False)
-                temp2=low.iloc[sta:fin,j].sort_values(ascending=False)
-                if len(temp1)==1 or len(temp2)==1:
+                sta = max(0,i-length);fin = max(0,i-1)+1
+                temp1 = high.iloc[sta:fin,j].sort_values(ascending=False)
+                temp2 = low.iloc[sta:fin,j].sort_values(ascending=False)
+                if len(temp1) == 1 or len(temp2) == 1:
                     continue
                 if temp1.isnull().any() or temp2.isnull().any():
                     continue
-                factor.iloc[i,j]=temp1.corr(temp2)
+                factor.iloc[i,j] = temp1.corr(temp2)
 
 
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
