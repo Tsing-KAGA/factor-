@@ -1,5 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 import time
 
 import numpy as np
@@ -22,9 +23,9 @@ class Factor(FactorBase):
         """
         s = time.time()
         needData = self.needData# 计算所需数据
-        hsl=needData[t.TURN]
-        hsl22=self.calculator.Mean(hsl,22)
-        factor=hsl22
+        hsl = needData[t.TURN]
+        hsl22 = self.calculator.Mean(hsl,22)
+        factor = hsl22
 
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
         return factor
