@@ -1,5 +1,6 @@
-# coding=utf8
-__author__ = 'mqh'
+#!/usr/bin/env Python
+# -*- coding:utf-8 -*-
+# author: mqh
 import time
 
 import numpy as np
@@ -28,17 +29,17 @@ class Factor(FactorBase):
         close = needData[t.CLOSE]
         open = needData[t.OPEN]
         vol = needData[t.VOLUME]
-        prevol=self.calculator.Mean(vol,10)
-        adjOpen=needData[t.OPEN]*needData[t.ADJFCT]
+        prevol = self.calculator.Mean(vol,10)
+        adjOpen = needData[t.OPEN]*needData[t.ADJFCT]
         adjLow = needData[t.LOW] * needData[t.ADJFCT]
         adjHigh = needData[t.HIGH] * needData[t.ADJFCT]
         adjClose = needData[t.CLOSE] * needData[t.ADJFCT]
         r1 = self.calculator.Rank((close - open) / open)
-        r2= self.calculator.Rank((adjClose-adjOpen)/adjOpen)
-        q1= self.calculator.Rank(r1)
+        r2 = self.calculator.Rank((adjClose-adjOpen)/adjOpen)
+        q1 = self.calculator.Rank(r1)
         q2 = self.calculator.Rank(r2)
-        corr=self.calculator.Decaylinear(self.calculator.Corr(r1, r2, 20),5)
-        factor=(vol>=prevol)*(-1 * corr)+(vol<prevol)*corr
+        corr = self.calculator.Decaylinear(self.calculator.Corr(r1, r2, 20),5)
+        factor = (vol>=prevol)*(-1 * corr)+(vol<prevol)*corr
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
         return factor
 
