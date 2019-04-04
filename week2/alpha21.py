@@ -1,3 +1,4 @@
+#思路： (Mean(high,20)<high)*(-1*Diff(high,2))+(Mean(high,20)>=high)*(Diff(high,20))
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
