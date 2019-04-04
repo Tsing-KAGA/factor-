@@ -1,3 +1,4 @@
+#思路： (adv20<vol)*(abs(Rank(declose,60))*sign(Diff(close,7)))+(adv20>=vol)*close
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
