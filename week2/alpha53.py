@@ -1,3 +1,4 @@
+#思路： (2*close-high-low)/(high-low)-self.calculator.Delay((2*close-high-low)/(high-low),9)
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
@@ -24,9 +25,12 @@ class Factor(FactorBase):
         s = time.time()
         length = 5;
         needData = self.needData# 计算所需数据
-        high = needData[t.HIGH];close=needData[t.CLOSE];low=needData[t.LOW]
-        r1 = (2*close-high-low)/(high-low);r2=self.calculator.Delay(r1,9)
-        factor = r2-r1
+        high = needData[t.HIGH]
+        close=needData[t.CLOSE]
+        low=needData[t.LOW]
+        r1 = (2*close-high-low)/(high-low)
+        r2 = self.calculator.Delay(r1,9)
+        factor = r1-r2
 
         print('factor {0} done with {1} seconds'.format(self.factorName, time.time() - s))
         return factor
