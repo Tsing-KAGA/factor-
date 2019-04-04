@@ -1,3 +1,4 @@
+#思路： delay((2*close-high-low)/(high-low),9)-(2*close-high-low)/(high-low)
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
