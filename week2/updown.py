@@ -1,3 +1,4 @@
+#思路： (RegBeta(high,low,10)-Mean(RegBeta(high,low,18),600))/Std(RegBeta(high,low,18),600)
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
