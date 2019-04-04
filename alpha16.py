@@ -1,3 +1,4 @@
+#思路: Corr(high,volume,5)
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
