@@ -1,3 +1,5 @@
+#思路： 2.21*Rank(Corr(uprange,Delay(vol,1),15))+0.7*Rank(-1*uprange)+0.73*Rank(FindRank(Delay(-1*ret,6),5))+
+#       Rank(abs(Corr(vwap,adv20,6)))+0.6*Rank((Mean(close,200)-open)*(close-open))
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
