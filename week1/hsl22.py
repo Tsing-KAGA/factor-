@@ -1,3 +1,4 @@
+#思路： 22日平均换手率
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
