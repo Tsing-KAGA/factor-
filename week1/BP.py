@@ -1,3 +1,4 @@
+#思路: netasset/mktcap
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
