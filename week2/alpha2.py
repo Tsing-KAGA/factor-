@@ -1,3 +1,5 @@
+#思路： (volume>=Mean(volume,10))*(-1 * Corr(Rank((adjClose-adjOpen)/adjOpen)),Rank((close - open) / open)),20)+
+#       (volume<Mean(volume,10))*Corr(Rank((adjClose-adjOpen)/adjOpen)),Rank((close - open) / open)),20)
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
