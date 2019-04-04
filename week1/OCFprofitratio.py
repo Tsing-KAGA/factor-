@@ -1,3 +1,4 @@
+#思路： NETCASHTTM/NETPCMTTM
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
