@@ -1,3 +1,4 @@
+#思路： Rank(open-mvwap)*Rank(close-vwap)
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
