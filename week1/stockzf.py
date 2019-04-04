@@ -1,3 +1,4 @@
+#思路： (close-delay(close,1))/delay(close,1)
 #!/usr/bin/env Python
 # -*- coding:utf-8 -*-
 # author: mqh
