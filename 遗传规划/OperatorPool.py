@@ -1,0 +1,201 @@
+from CalculatorModule.CalculatorMatrix import Calculator
+import numpy as np
+def add(x,y):
+    return x+y
+def minus(x,y):
+    return x-y
+def multiply(x,y):
+    return x*y
+def divide(x,y):
+    return x/y
+def cmpmin(x,y):
+    return Calculator().cmpMin(x,y)
+def cmpmax(x,y):
+    return Calculator().cmpMax(x,y)
+def delay5(x):
+    return Calculator().Delay(x,5)
+def delay6(x):
+    return Calculator().Delay(x,6)
+def delay7(x):
+    return Calculator().Delay(x,7)
+def delay8(x):
+    return Calculator().Delay(x,8)
+def delay9(x):
+    return Calculator().Delay(x,9)
+def delay10(x):
+    return Calculator().Delay(x,10)
+def diff1(x):
+    return Calculator().Diff(x,1)
+def diff2(x):
+    return Calculator().Diff(x,2)
+def diff3(x):
+    return Calculator().Diff(x,3)
+def diff4(x):
+    return Calculator().Diff(x,4)
+def diff5(x):
+    return Calculator().Diff(x,5)
+def diff6(x):
+    return Calculator().Diff(x,6)
+def diff7(x):
+    return Calculator().Diff(x,7)
+def diff8(x):
+    return Calculator().Diff(x,8)
+def diff9(x):
+    return Calculator().Diff(x,9)
+def diff10(x):
+    return Calculator().Diff(x,10)
+def diff20(x):
+    return Calculator().Diff(x,20)
+def max5(x):
+    return Calculator().Max(x,5)
+def max6(x):
+    return Calculator().Max(x,6)
+def max7(x):
+    return Calculator().Max(x,7)
+def max8(x):
+    return Calculator().Max(x,8)
+def max9(x):
+    return Calculator().Max(x,9)
+def max10(x):
+    return Calculator().Max(x,10)
+def min5(x):
+    return Calculator().Min(x,5)
+def min6(x):
+    return Calculator().Min(x,6)
+def min7(x):
+    return Calculator().Min(x,7)
+def min8(x):
+    return Calculator().Min(x,8)
+def min9(x):
+    return Calculator().Min(x,9)
+def min10(x):
+    return Calculator().Min(x,10)
+def mean5(x):
+    return Calculator().Mean(x,5)
+def mean10(x):
+    return Calculator().Mean(x,10)
+def mean15(x):
+    return Calculator().Mean(x,15)
+def mean20(x):
+    return Calculator().Mean(x,20)
+def mean30(x):
+    return Calculator().Mean(x,30)
+def mean60(x):
+    return Calculator().Mean(x,60)
+def sum5(x):
+    return Calculator().Sum(x,5)
+def sum6(x):
+    return Calculator().Sum(x,6)
+def sum7(x):
+    return Calculator().Sum(x,7)
+def sum8(x):
+    return Calculator().Sum(x,8)
+def sum9(x):
+    return Calculator().Sum(x,9)
+def sum10(x):
+    return Calculator().Sum(x,10)
+def var5(x):
+    return Calculator().Var(x,5)
+def var10(x):
+    return Calculator().Var(x,10)
+def var15(x):
+    return Calculator().Var(x,15)
+def var20(x):
+    return Calculator().Var(x,20)
+def var25(x):
+    return Calculator().Var(x,25)
+def var30(x):
+    return Calculator().Var(x,30)
+def std5(x):
+    return Calculator().Std(x,5)
+def decaylinear5(x):
+    return Calculator().Decaylinear(x,5)
+def decaylinear6(x):
+    return Calculator().Decaylinear(x,6)
+def decaylinear7(x):
+    return Calculator().Decaylinear(x,7)
+def decaylinear8(x):
+    return Calculator().Decaylinear(x,8)
+def decaylinear9(x):
+    return Calculator().Decaylinear(x,9)
+def decaylinear10(x):
+    return Calculator().Decaylinear(x,10)
+def rank(x):
+    return Calculator().Rank(x)
+def tsmax5(x):
+    return Calculator().TsToMax(x,5)
+def tsmin5(x):
+    return Calculator().TsToMin(x,5)
+def corr5(x,y):
+    return Calculator().Corr(x,y,5)
+def corr10(x,y):
+    return Calculator().Corr(x,y,10)
+def corr15(x,y):
+    return Calculator().Corr(x,y,15)
+def corr20(x,y):
+    return Calculator().Corr(x,y,20)
+def corr25(x,y):
+    return Calculator().Corr(x,y,25)
+def corr30(x,y):
+    return Calculator().Corr(x,y,30)
+def corr60(x,y):
+    return Calculator().Corr(x,y,60)
+def regalpha5(x,y):
+    return Calculator().RegAlpha(x,y,5)
+def regalpha10(x,y):
+    return Calculator().RegAlpha(x,y,10)
+def regalpha15(x,y):
+    return Calculator().RegAlpha(x,y,15)
+def regalpha20(x,y):
+    return Calculator().RegAlpha(x,y,20)
+def regalpha30(x,y):
+    return Calculator().RegAlpha(x,y,30)
+def regalpha60(x,y):
+    return Calculator().RegAlpha(x,y,60)
+def regbeta5(x,y):
+    return Calculator().RegBeta(x,y,5)
+def regbeta10(x,y):
+    return Calculator().RegBeta(x,y,10)
+def regbeta15(x,y):
+    return Calculator().RegBeta(x,y,15)
+def regbeta20(x,y):
+    return Calculator().RegBeta(x,y,20)
+def regbeta30(x,y):
+    return Calculator().RegBeta(x,y,30)
+def regbeta60(x,y):
+    return Calculator().RegBeta(x,y,60)
+def reverse(x):
+    return -1*x
+def standard(x):
+    return (x-x.min())/(x.max()-x.min())
+def arctan(x):
+    return np.arctan(x)/np.pi
+def cos(x):
+    return np.cos(x)
+def sin(x):
+    return np.sin(x)
+def log2(x):
+    return np.log2(abs(x))
+def log10(x):
+    return np.log10(abs(x))
+def log(x):
+    return np.log(abs(x))
+def mulcond(x,y,w,z):
+    return (x<=y)*w+(x>y)*z
+'''def condleq(x,y):
+    return x<=y
+def condreq(x,y):
+    return x>=y
+def regresi5(x,y):
+    #return Calculator().RegResi(x,y,5)
+def arccos(x):
+    x = standard(x)
+    return np.arccos(x)/np.pi
+def arcsin(x):
+    x = standard(x)
+    return np.arcsin(x)/np.pi
+def exp(x):
+    return np.exp(x)
+'''
+
+

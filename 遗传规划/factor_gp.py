@@ -8,6 +8,7 @@ import pandas as pd
 import numpy
 import random
 import gc
+import pickle
 import _thread
 factorDefPath = r'..\FactorPool\factors_mqh'  # 因子定义路径
 factorDataPath = r'..\FactorPool\factors_mqh_data'  # 因子数据路径
@@ -107,7 +108,8 @@ def cal_fitness(genmark):  #计算适应度：0.8*sharp-0.2*turnover
         del locals()[x]
     gc.collect()
     return fitness
-def writefct(individual,genmark):
+
+def writefct(individual,genmark): #写入因子文件
     expression = str((individual))
     needfield=create_needfield(individual)
     fct = exp2fctpy(expression,needfield)
@@ -119,9 +121,10 @@ def writefct(individual,genmark):
     for x in locals().keys(): #清除局部变量
         del locals()[x]
     gc.collect()
+
 if __name__ == "__main__":
     df=pd.core.frame.DataFrame
-    pset=gp.PrimitiveSetTyped("main",[df for i in range(9)],df) #deap注册变量
+    pset=gp.PrimitiveSetTyped("main",[df for i in range(11)],df) #deap注册变量
     pset.renameArguments(**field)
     operator = dir(OperatorPool)[9:]  #读取OperatorPool中的操作函数
     operator.remove("np")
@@ -149,26 +152,48 @@ if __name__ == "__main__":
     toolbox.register("evaluate",cal_fitness) #toolbox注册适应度函数
     toolbox.register("select", tools.selTournament, tournsize=3) #toolbox注册选择函数
     toolbox.register("mate", gp.cxOnePoint) #toolbox注册交叉函数
-    toolbox.register("expr_mut", gp.genFull, min_=1, max_=3) #toolbox注册生成变异函数
+    toolbox.register("expr_mut", gp.genFull, min_=0, max_=3) #toolbox注册生成变异函数
     toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset) #toolbox注册变异函数
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register("avg", numpy.mean,axis=0) #获得统计信息
     stats.register("std", numpy.std,axis=0)
     stats.register("min", numpy.min,axis=0)
     stats.register("max", numpy.max,axis=0)
-    cxpb, mutpb, ngen = 0.5, 0.2, 8 #设定交叉概率、变异概率、世代数量
+    cxpb, mutpb, ngen = 0.5, 0.2, 2 #设定交叉概率、变异概率、世代数量
     fits = []
-    gen = 0
-    pop = toolbox.population(n=10)  #生成含有n个个体的群体
-    for ind in pop: #计算个体适应度
-        genmark = str(gen) + "_" + str(pop.index(ind))
-        ind.genmark=genmark  #生成进化标签，以供写入因子文件函数使用
-        writefct(ind, genmark)
-    for ind in pop:
-        fitvalue = toolbox.evaluate(ind.genmark) #计算适应度
-        ind.fitness.values = fitvalue
-    gen += 1
-    print(stats.compile(pop))
+    checkpoint="checkpoint.pkl"
+    addpoint=1
+    if checkpoint:
+        # 读取保存的世代
+        with open(checkpoint, 'rb') as cp_file:
+            cp = pickle.load(cp_file)
+        popt = cp["population"]
+        gen = cp["generation"]
+        pop=toolbox.select(popt,20)
+        if addpoint:
+            #在保存的世代中加入新的个体
+            pop1=toolbox.population(n=20)
+            pop.extend(pop1)
+            invalid_ind = [ind for ind in pop if not ind.fitness.valid]
+            for ind in invalid_ind:  # 计算个体适应度
+                genmark = str(gen) + "_" + str(pop.index(ind))
+                ind.genmark = genmark  # 生成进化标签，以供写入因子文件函数使用
+                writefct(ind, genmark)
+            for ind in invalid_ind:
+                fitvalue = toolbox.evaluate(ind.genmark)  # 计算适应度
+                ind.fitness.values = fitvalue
+    else:
+        # 开始一个新的世代
+        pop = toolbox.population(n=10)  #生成含有n个个体的群体
+        for ind in pop: #计算个体适应度
+            genmark = str(gen) + "_" + str(pop.index(ind))
+            ind.genmark=genmark  #生成进化标签，以供写入因子文件函数使用
+            writefct(ind, genmark)
+        for ind in pop:
+            fitvalue = toolbox.evaluate(ind.genmark) #计算适应度
+            ind.fitness.values = fitvalue
+        gen += 1
+    print(stats.compile(pop))#打印统计信息
     for g in range(ngen): #开始进化
         offspring = toolbox.select(pop, k=len(pop))
         offspring = list(map(toolbox.clone, offspring))
@@ -195,3 +220,9 @@ if __name__ == "__main__":
         pop[:] = offspring #得到新一代
         gen += 1
         print(stats.compile(pop)) #打印统计信息
+        for ind in pop:
+            print(ind.genmark, ind.fitness.values) #打印每一个个体的进化标签和适应度
+    #保存世代
+    cp = dict(population=pop, generation=gen)
+    with open("checkpoint.pkl", "wb") as cp_file:
+        pickle.dump(cp, cp_file)
