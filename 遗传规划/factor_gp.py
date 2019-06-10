@@ -1,3 +1,7 @@
+# coding=utf8
+#!/usr/bin/python3
+#!/usr/bin/env python3
+__author__ = 'mqh'
 from deap import base, creator, gp, tools, algorithms
 from FactorModule.FactorShow import FactorShow
 from DataReaderModule.Constants import ALIAS_RESPONSE as alr
@@ -74,7 +78,8 @@ class Factor(FactorBase):\n\tdef __init__(self):\n\t\tsuper(Factor, self).__init
     gc.collect()
     return s
 
-def cal_fitness(genmark):  #计算适应度：0.8*sharp-0.2*turnover
+def cal_fitness(ind):  #计算适应度：0.8*sharp-0.2*turnover
+    genmark=ind.genmark
     fctname = "genticT" + genmark
     path = r'factors_mqh//' + fctname + ".py"
     failures = update_factors(factorList=[fctname], #通过update计算sharp
@@ -124,7 +129,7 @@ def writefct(individual,genmark): #写入因子文件
 
 if __name__ == "__main__":
     df=pd.core.frame.DataFrame
-    pset=gp.PrimitiveSetTyped("main",[df for i in range(11)],df) #deap注册变量
+    pset=gp.PrimitiveSetTyped("main",[df for i in range(13)],df) #deap注册变量
     pset.renameArguments(**field)
     operator = dir(OperatorPool)[9:]  #读取OperatorPool中的操作函数
     operator.remove("np")
@@ -159,19 +164,20 @@ if __name__ == "__main__":
     stats.register("std", numpy.std,axis=0)
     stats.register("min", numpy.min,axis=0)
     stats.register("max", numpy.max,axis=0)
-    cxpb, mutpb, ngen = 0.5, 0.2, 2 #设定交叉概率、变异概率、世代数量
+    hof = tools.HallOfFame(1)
+    cxpb, mutpb, ngen = 0.5, 0.2, 4 #设定交叉概率、变异概率、世代数量
     fits = []
-    checkpoint="checkpoint.pkl"
-    addpoint=1
+    checkpoint=1
+    addpoint=0
     if checkpoint:
         # 读取保存的世代
-        with open(checkpoint, 'rb') as cp_file:
+        with open("checkpoint0605.pkl", 'rb') as cp_file:
             cp = pickle.load(cp_file)
-        popt = cp["population"]
+        pop = cp["population"]
         gen = cp["generation"]
-        pop=toolbox.select(popt,20)
         if addpoint:
             #在保存的世代中加入新的个体
+            #pop = toolbox.select(pop, 20)
             pop1=toolbox.population(n=20)
             pop.extend(pop1)
             invalid_ind = [ind for ind in pop if not ind.fitness.valid]
@@ -179,50 +185,51 @@ if __name__ == "__main__":
                 genmark = str(gen) + "_" + str(pop.index(ind))
                 ind.genmark = genmark  # 生成进化标签，以供写入因子文件函数使用
                 writefct(ind, genmark)
-            for ind in invalid_ind:
-                fitvalue = toolbox.evaluate(ind.genmark)  # 计算适应度
-                ind.fitness.values = fitvalue
+            fitnesses = map(toolbox.evaluate, invalid_ind)# 计算适应度
+            for ind, fit in zip(invalid_ind, fitnesses):
+                ind.fitness.values = fit
     else:
         # 开始一个新的世代
-        pop = toolbox.population(n=10)  #生成含有n个个体的群体
-        for ind in pop: #计算个体适应度
+        gen=0
+        pop = toolbox.population(n=20)  #生成含有n个个体的群体
+        invalid_ind = [ind for ind in pop if not ind.fitness.valid]
+        for ind in invalid_ind:
             genmark = str(gen) + "_" + str(pop.index(ind))
             ind.genmark=genmark  #生成进化标签，以供写入因子文件函数使用
             writefct(ind, genmark)
-        for ind in pop:
-            fitvalue = toolbox.evaluate(ind.genmark) #计算适应度
-            ind.fitness.values = fitvalue
+        fitnesses = map(toolbox.evaluate, invalid_ind)  # 计算适应度
+        for ind, fit in zip(invalid_ind, fitnesses):
+            ind.fitness.values = fit
         gen += 1
-    print(stats.compile(pop))#打印统计信息
+    print(stats.compile(pop))
     for g in range(ngen): #开始进化
         offspring = toolbox.select(pop, k=len(pop))
         offspring = list(map(toolbox.clone, offspring))
         for child1, child2 in zip(offspring[::2], offspring[1::2]): #进行交叉
             if random.random() < cxpb:
-                toolbox.mate(child1, child2)
+                child1,child2=toolbox.mate(child1, child2)
                 del child1.fitness.values
                 del child2.fitness.values
         gc.collect()
         for mutant in offspring: #进行变异
             if random.random() < mutpb:
-                toolbox.mutate(mutant)
+                mutant,=toolbox.mutate(mutant)
                 del mutant.fitness.values
         gc.collect()
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-        fitness = []
         for ind in invalid_ind: #计算个体适应度（经过交叉或者变异操作的个体）
             genmark = str(gen) + "_" + str(offspring.index(ind))
             ind.genmark = genmark
             writefct(ind, genmark)
-        for ind in invalid_ind:
-            fitvalue = toolbox.evaluate(ind.genmark)
-            ind.fitness.values = fitvalue
+        fitnesses = map(toolbox.evaluate, invalid_ind)  # 计算适应度
+        for ind, fit in zip(invalid_ind, fitnesses):
+            ind.fitness.values = fit
         pop[:] = offspring #得到新一代
         gen += 1
-        print(stats.compile(pop)) #打印统计信息
+        print(stats.compile(pop))
         for ind in pop:
             print(ind.genmark, ind.fitness.values) #打印每一个个体的进化标签和适应度
-    #保存世代
-    cp = dict(population=pop, generation=gen)
-    with open("checkpoint.pkl", "wb") as cp_file:
-        pickle.dump(cp, cp_file)
+        #保存世代
+        cp = dict(population=pop, generation=gen)
+        with open("checkpoint0605.pkl", "wb") as cp_file:
+            pickle.dump(cp, cp_file)
